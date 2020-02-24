@@ -23,6 +23,18 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	//다국어 메시지 저장하기 위함.
+	implementation 'net.rakugakibox.util:yaml-resource-bundle:1.1'
+	implementation 'io.springfox:springfox-swagger2:2.6.1'
+	implementation 'io.springfox:springfox-swagger-ui:2.6.1'
+	
+	//이메일검증
+	implementation group: 'org.springframework', name: 'spring-context-support', version: '5.2.2.RELEASE'
+	
+	
+	
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
