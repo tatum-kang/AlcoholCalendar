@@ -28,6 +28,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Getter
@@ -36,41 +37,43 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
-@ApiModel
-public class UserEntity extends TimeEntity implements UserDetails {
+@Setter
+public class UserEntity extends TimeEntity implements UserDetails{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long uid;
 	
-	@ApiModelProperty(value = "이메일", required = true)
-	@Column(length = 50, nullable = false, unique = true)
+	@Column(length = 100, nullable = false, unique = true)
 	private String email;
 	
-	@ApiModelProperty(value="비밀번호", required = true)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@Column(length = 50, nullable = false)
+	@Column(length = 100, nullable = false)
 	private String password;
 	
-	@ApiModelProperty(value="이름")
-	@Column(length = 30, nullable = false)
+	@Column(length = 100, nullable = false)
 	private String name;
 	
-	@ApiModelProperty(value="닉네임")
-	@Column(length = 30, nullable = false, unique = true)
-	private String username;
+	@Column(length = 100, nullable = false, unique = true)
+	private String nickname;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Builder.Default
 	private List<String> roles = new ArrayList<>();
 	
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Column(length = 100, nullable = false)
+	private String emailAuthKey;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@Builder.Default
-	private List<ScheduleEntity> schedules = new ArrayList<>();
+	@Column(nullable = false)
+	private boolean emailAuthBool;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@Builder.Default
-	private List<GoalEntity> goals = new ArrayList<>();
+////	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//	@Builder.Default
+//	private List<ScheduleEntity> schedules = new ArrayList<>();
+//	
+////	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//	@Builder.Default
+//	private List<GoalEntity> goals = new ArrayList<>();
 	
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@Override

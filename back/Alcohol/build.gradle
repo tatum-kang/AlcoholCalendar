@@ -31,10 +31,15 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger-ui:2.6.1'
 	
 	//이메일검증
-	implementation group: 'org.springframework', name: 'spring-context-support', version: '5.2.2.RELEASE'
+	implementation "org.springframework:spring-context-support:5.2.2.RELEASE" 
+	implementation "com.sun.mail:javax.mail:1.6.2"
+
+	//implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+	//implementation group: 'org.springframework', name: 'spring-context-support', version: '5.2.2.RELEASE'
 	
 	
-	
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
