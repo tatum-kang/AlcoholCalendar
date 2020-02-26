@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.rest.advice.exception.CEmailConfirmFailedException;
 import com.rest.advice.exception.CEmailSigninFailedException;
+import com.rest.advice.exception.CUserNotCorrectException;
 import com.rest.advice.exception.CUserNotFoundException;
 import com.rest.domain.response.CommonResult;
 import com.rest.service.ResponseService;
@@ -37,10 +38,17 @@ public class ExceptionAdvice {
 				getMessage("emailSigninFailed.msg"));
 	}
 	
+	@ExceptionHandler(CUserNotCorrectException.class)
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	protected CommonResult userNotCorrect(HttpServletRequest request, CUserNotCorrectException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("userNotCorrected.code")),
+				getMessage("userNotCorrect.msg"));
+	}
+	
 	@ExceptionHandler(CEmailConfirmFailedException.class)
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	protected CommonResult emailSigninFailed(HttpServletRequest request, CEmailConfirmFailedException e) {
-		return responseService.getFailResult(Integer.valueOf(getMessage("emailSigninFailed.code")),
+	protected CommonResult emailConfirmFailed(HttpServletRequest request, CEmailConfirmFailedException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("emailConfirmFailed.code")),
 				getMessage("emailConfirmFailed.msg"));
 	}
 

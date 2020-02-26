@@ -20,10 +20,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -67,13 +66,18 @@ public class UserEntity extends TimeEntity implements UserDetails{
 	@Column(nullable = false)
 	private boolean emailAuthBool;
 	
-////	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//	@Builder.Default
-//	private List<ScheduleEntity> schedules = new ArrayList<>();
-//	
-////	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//	@Builder.Default
-//	private List<GoalEntity> goals = new ArrayList<>();
+	@JsonManagedReference
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@Builder.Default
+	private List<ScheduleEntity> schedules = new ArrayList<>();
+	
+	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@Builder.Default
+	private List<GoalEntity> goals = new ArrayList<>();
+	
+	
 	
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@Override
