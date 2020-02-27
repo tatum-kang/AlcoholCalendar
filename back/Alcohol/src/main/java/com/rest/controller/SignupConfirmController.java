@@ -1,5 +1,7 @@
 package com.rest.controller;
 
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/v1/user")
+@Transactional
 public class SignupConfirmController {
 	private final UserRepository userRepository;
 	
