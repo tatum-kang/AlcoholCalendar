@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,9 +25,10 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component
+@PropertySource("classpath:application.yml")
 public class JwtTokenProvider {
 
-	@Value("spring.jwt.secret")
+	@Value("${spring.jwt.secret}")
 	private String secretKey;
 
 	private long tokenValidMilisecond = 1000L * 60 * 60;

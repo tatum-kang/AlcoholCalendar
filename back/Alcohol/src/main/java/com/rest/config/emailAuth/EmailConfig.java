@@ -10,7 +10,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 
 @Component
-//@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application.yml")
 public class EmailConfig {
     Properties properties = new Properties();
 
