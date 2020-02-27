@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://database-1.cwp8i0hixxrs.ap-northeast-2.rds.amazonaws.com/webserverdb?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://database-1.cwp8i0hixxrs.ap-northeast-2.rds.amazonaws.com:3306/webserverdb?serverTimezone=Asia/Seoul
     username: admin
     password: 1stlight!
     

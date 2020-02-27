@@ -33,7 +33,7 @@ dependencies {
 	//이메일검증
 	implementation "org.springframework:spring-context-support:5.2.2.RELEASE" 
 	implementation "com.sun.mail:javax.mail:1.6.2"
-
+	implementation "com.h2database:h2"
 	//implementation group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
 	//implementation group: 'org.springframework', name: 'spring-context-support', version: '5.2.2.RELEASE'
 	
