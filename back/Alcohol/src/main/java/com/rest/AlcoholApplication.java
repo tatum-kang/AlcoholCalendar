@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 @EnableJpaAuditing
+@PropertySource("classpath:application.yml")
 public class AlcoholApplication {
 
 	public static void main(String[] args) {
