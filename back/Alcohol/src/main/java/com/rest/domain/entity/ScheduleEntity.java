@@ -65,4 +65,7 @@ public class ScheduleEntity extends TimeEntity{
 	@Column(nullable = false)
 	private double soju;
 	
+	@Column(nullable = true)
+	private String imagePath;
+	
 }

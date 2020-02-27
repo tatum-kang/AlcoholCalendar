@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -42,6 +43,7 @@ public class UserEntity extends TimeEntity implements UserDetails{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long uid;
 	
+	@Email(message = "이메일 형식에 맞지 않습니다.")
 	@Column(length = 100, nullable = false, unique = true)
 	private String email;
 	

@@ -70,14 +70,14 @@ public class UserController {
 		return responseService.getSingleResult("email 인증을 확인하여 주세요.");
 	}
 
-	@GetMapping("/signup/confirm")
-	public void emailConfirm(@RequestParam String authkey, @RequestParam Long uid) {
-		UserEntity user = userRepository.getOne(uid);
-		if(user.getEmailAuthKey().equals(authkey)) {
-			user.setEmailAuthBool(true);
-			userRepository.save(user);
-		}
-	}
+//	@GetMapping("/signup/confirm")
+//	public void emailConfirm(@RequestParam String authkey, @RequestParam Long uid) {
+//		UserEntity user = userRepository.getOne(uid);
+//		if(user.getEmailAuthKey().equals(authkey)) {
+//			user.setEmailAuthBool(true);
+//			userRepository.save(user);
+//		}
+//	}
 	
 	@ApiOperation(value = "로그인", notes = "로그인하기")
 	@PostMapping("/login")
