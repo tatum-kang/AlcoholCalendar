@@ -125,7 +125,7 @@ public class UserController {
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
 	})
 	@ApiOperation(value = "회원조회", notes = "회원정보를 조회")
-	@PostMapping(value = "/select")
+	@GetMapping(value = "/select")
 	public SingleResult<UserEntity> select(
 			@ApiParam(value = "회원이메일", required = true) @RequestParam String email
 			){
