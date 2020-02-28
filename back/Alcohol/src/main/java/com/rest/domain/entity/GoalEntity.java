@@ -56,7 +56,7 @@ public class GoalEntity extends TimeEntity{
 	@Column(nullable = false)
 	private int day;
 	
-	@JsonBackReference
+//	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "user_uid")
 	private UserEntity user;

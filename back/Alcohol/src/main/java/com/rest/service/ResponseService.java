@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.rest.domain.entity.ScheduleEntity;
+import com.rest.domain.entity.UserEntity;
 import com.rest.domain.response.CommonResult;
 import com.rest.domain.response.ListResult;
+import com.rest.domain.response.ScheduleResult;
 import com.rest.domain.response.SingleResult;
 
 import lombok.AllArgsConstructor;
@@ -43,12 +46,22 @@ public class ResponseService {
 		setSuccessResult(result);
 		return result;
 	}
+
+	public ScheduleResult getScheduleResult(List<ScheduleEntity> list, UserEntity user) {
+		ScheduleResult result = new ScheduleResult();
+		result.setList(list);
+		result.setUser(user);
+		setSuccessResult(result);
+		return result;
+	}
+	
 	
 	public CommonResult getSuccessResult() {
         CommonResult result = new CommonResult();
         setSuccessResult(result);
         return result;
     }
+	
 
 	public CommonResult getFailResult(int code, String msg) {
         CommonResult result = new CommonResult();

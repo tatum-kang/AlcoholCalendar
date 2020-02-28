@@ -1,6 +1,7 @@
 package com.rest.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -20,7 +21,7 @@ import com.rest.domain.entity.UserEntity;
 import com.rest.domain.repository.ScheduleRepository;
 import com.rest.domain.repository.UserRepository;
 import com.rest.domain.response.CommonResult;
-import com.rest.domain.response.ListResult;
+import com.rest.domain.response.ScheduleResult;
 import com.rest.domain.response.SingleResult;
 import com.rest.service.AuthToUserService;
 import com.rest.service.ResponseService;
@@ -79,11 +80,12 @@ public class ScheduleContoller {
 	})
 	@ApiOperation(value = "일정 조회", notes = "원하는 연, 월 일정 조회하기")
 	@GetMapping("/select")
-	public ListResult<ScheduleEntity> select(
+	public ScheduleResult select(
 			@ApiParam(value = "년") @RequestParam int year,
 			@ApiParam(value = "월") @RequestParam int month){
 		UserEntity user = authToUserService.getUser();
-		return responseService.getListResult(scheduleRepository.findByUserAndYearAndMonth(user, year, month));
+		List<ScheduleEntity> sc = scheduleRepository.findByUserAndYearAndMonth(user, year, month);
+		return responseService.getScheduleResult(sc, user);
 	}
 	
 	

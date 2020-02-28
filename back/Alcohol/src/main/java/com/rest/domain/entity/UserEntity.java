@@ -68,16 +68,16 @@ public class UserEntity extends TimeEntity implements UserDetails{
 	@Column(nullable = false)
 	private boolean emailAuthBool;
 	
-	@JsonManagedReference
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@Builder.Default
-	private List<ScheduleEntity> schedules = new ArrayList<>();
-	
-	
-	@JsonManagedReference
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@Builder.Default
-	private List<GoalEntity> goals = new ArrayList<>();
+//	@JsonManagedReference
+//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//	@Builder.Default
+//	private List<ScheduleEntity> schedules = new ArrayList<>();
+//	
+//	
+//	@JsonManagedReference
+//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//	@Builder.Default
+//	private List<GoalEntity> goals = new ArrayList<>();
 	
 	
 	

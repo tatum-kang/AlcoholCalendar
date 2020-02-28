@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,7 +52,8 @@ public class ScheduleEntity extends TimeEntity{
 	@Column(length = 300)
 	private String content;
 	
-	@JsonBackReference
+//	@JsonBackReference
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@ManyToOne
 	@JoinColumn(name = "user_uid")
 	private UserEntity user;
