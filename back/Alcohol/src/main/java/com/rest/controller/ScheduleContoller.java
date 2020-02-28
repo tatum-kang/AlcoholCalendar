@@ -41,10 +41,8 @@ import lombok.RequiredArgsConstructor;
 public class ScheduleContoller {
 	private final ScheduleRepository scheduleRepository;
 	private final ResponseService responseService;
-	private final JwtTokenProvider jwtTokenProvider;
 	private final UserRepository userRepository;
 	private final AuthToUserService authToUserService;
-	
 	
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
@@ -80,14 +78,13 @@ public class ScheduleContoller {
 	})
 	@ApiOperation(value = "일정 조회", notes = "원하는 연, 월 일정 조회하기")
 	@GetMapping("/select")
-	public ScheduleResult select(
+	public ScheduleResult<ScheduleEntity> select(
 			@ApiParam(value = "년") @RequestParam int year,
 			@ApiParam(value = "월") @RequestParam int month){
 		UserEntity user = authToUserService.getUser();
 		List<ScheduleEntity> sc = scheduleRepository.findByUserAndYearAndMonth(user, year, month);
 		return responseService.getScheduleResult(sc, user);
 	}
-	
 	
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")

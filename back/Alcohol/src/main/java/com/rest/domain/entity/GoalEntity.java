@@ -11,7 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,10 +39,10 @@ public class GoalEntity extends TimeEntity{
 	@Column(nullable = false)
 	private LocalDate startDate;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private double currentBeer;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private double currentSoju;
 	
 	@Column(nullable = false)
@@ -53,11 +54,11 @@ public class GoalEntity extends TimeEntity{
 	@Column(nullable = false, length = 100)
 	private String title;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private int day;
 	
-//	@JsonBackReference
-	@ManyToOne
+	@JsonProperty(access = Access.WRITE_ONLY)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_uid")
 	private UserEntity user;
 }

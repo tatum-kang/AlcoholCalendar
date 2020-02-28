@@ -3,8 +3,10 @@ package com.rest.domain.entity;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -52,9 +55,8 @@ public class ScheduleEntity extends TimeEntity{
 	@Column(length = 300)
 	private String content;
 	
-//	@JsonBackReference
 	@JsonProperty(access = Access.WRITE_ONLY)
-	@ManyToOne
+	@ManyToOne(optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_uid")
 	private UserEntity user;
 
@@ -68,7 +70,5 @@ public class ScheduleEntity extends TimeEntity{
 	@Column(nullable = false)
 	private double soju;
 	
-	@Column(nullable = true)
-	private String imagePath;
 	
 }

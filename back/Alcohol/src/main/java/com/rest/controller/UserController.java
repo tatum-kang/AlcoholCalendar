@@ -37,8 +37,8 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @Api(tags = {"1. Sign"})
 @RequiredArgsConstructor
-@RequestMapping("/v1/user")
 @Transactional
+@RequestMapping("/v1/user")
 public class UserController {
 	private final UserRepository userRepository;
 	private final ResponseService responseService;
@@ -70,15 +70,6 @@ public class UserController {
 		return responseService.getSingleResult("email 인증을 확인하여 주세요.");
 	}
 
-//	@GetMapping("/signup/confirm")
-//	public void emailConfirm(@RequestParam String authkey, @RequestParam Long uid) {
-//		UserEntity user = userRepository.getOne(uid);
-//		if(user.getEmailAuthKey().equals(authkey)) {
-//			user.setEmailAuthBool(true);
-//			userRepository.save(user);
-//		}
-//	}
-	
 	@ApiOperation(value = "로그인", notes = "로그인하기")
 	@PostMapping("/login")
 	public SingleResult<String> login(

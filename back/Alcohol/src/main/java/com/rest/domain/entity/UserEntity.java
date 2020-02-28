@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -14,14 +13,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -68,17 +70,17 @@ public class UserEntity extends TimeEntity implements UserDetails{
 	@Column(nullable = false)
 	private boolean emailAuthBool;
 	
-//	@JsonManagedReference
-//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//	@Builder.Default
-//	private List<ScheduleEntity> schedules = new ArrayList<>();
-//	
-//	
-//	@JsonManagedReference
-//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//	@Builder.Default
-//	private List<GoalEntity> goals = new ArrayList<>();
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)	
+	@Builder.Default
+	private List<ScheduleEntity> schedules = new ArrayList<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
+	@Builder.Default
+	private List<GoalEntity> goal = new ArrayList<>();
 	
 	
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
