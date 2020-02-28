@@ -47,8 +47,8 @@ public class ResponseService {
 		return result;
 	}
 
-	public ScheduleResult getScheduleResult(List<ScheduleEntity> list, UserEntity user) {
-		ScheduleResult result = new ScheduleResult();
+	public <T> ScheduleResult<T> getScheduleResult(List<T> list, UserEntity user) {
+		ScheduleResult<T> result = new ScheduleResult<>();
 		result.setList(list);
 		result.setUser(user);
 		setSuccessResult(result);

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rest.advice.exception.CUserNotCorrectException;
-import com.rest.config.jwtAuth.JwtTokenProvider;
 import com.rest.domain.entity.ScheduleEntity;
 import com.rest.domain.entity.UserEntity;
 import com.rest.domain.repository.ScheduleRepository;

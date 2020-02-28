@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ScheduleResult extends CommonResult{
-	private List<ScheduleEntity> list;
+public class ScheduleResult<T> extends CommonResult{
+	private List<T> list;
 	private UserEntity user;
 }
