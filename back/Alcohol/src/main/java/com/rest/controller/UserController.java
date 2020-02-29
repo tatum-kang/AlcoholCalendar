@@ -1,7 +1,5 @@
 package com.rest.controller;
 
-import java.util.Collections;
-
 import javax.transaction.Transactional;
 
 import org.springframework.security.core.Authentication;
@@ -9,17 +7,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rest.advice.exception.CEmailConfirmFailedException;
 import com.rest.advice.exception.CEmailSigninFailedException;
-import com.rest.advice.exception.CUserNotFoundException;
+import com.rest.advice.exception.CUserNotCorrectException;
 import com.rest.config.emailAuth.TempKey;
 import com.rest.config.jwtAuth.JwtTokenProvider;
+import com.rest.domain.dto.UserDto;
+import com.rest.domain.dto.UserLoginDto;
 import com.rest.domain.entity.UserEntity;
 import com.rest.domain.repository.UserRepository;
 import com.rest.domain.response.CommonResult;
@@ -49,21 +51,11 @@ public class UserController {
 	@PostMapping("/signup")
 	@ApiOperation(value = "회원가입", notes = "회원가입하기")
 	public SingleResult<String> signup (
-			@ApiParam(value ="회원 ID : EMAIL", required = true) @RequestParam String email,
-			@ApiParam(value ="회원 비밀번호", required = true) @RequestParam String password,
-			@ApiParam(value ="회원 이름", required = true) @RequestParam String name,
-			@ApiParam(value ="회원 닉네임", required = true) @RequestParam String nickname) throws Exception{
+			@RequestBody UserDto userDto
+			) throws Exception{
 		
 		String authkey = new TempKey().getKey(50, false);
-		UserEntity user = UserEntity.builder()
-				.email(email)
-				.password(passwordEncoder.encode(password))
-				.emailAuthBool(false)
-				.nickname(nickname)
-				.name(name)
-				.emailAuthKey(authkey)
-				.roles(Collections.singletonList("ROLE_USER"))
-				.build();
+		UserEntity user = userDto.toEntity(passwordEncoder.encode(userDto.getPassword()), authkey);
 		userRepository.save(user);
 		user = userRepository.findByEmail(user.getEmail());
 		emailAuthService.sendHtmlMail(user);
@@ -73,10 +65,9 @@ public class UserController {
 	@ApiOperation(value = "로그인", notes = "로그인하기")
 	@PostMapping("/login")
 	public SingleResult<String> login(
-			@ApiParam(value = "회원 이메일", required = true) @RequestParam String email,
-			@ApiParam(value = "회원 비밀번호", required = true) @RequestParam String password){
-		UserEntity user = userRepository.findByEmail(email);
-		if(!passwordEncoder.matches(password, user.getPassword())) {
+			@RequestBody UserLoginDto userLoginDto){
+		UserEntity user = userRepository.findByEmail(userLoginDto.getEmail());
+		if(!passwordEncoder.matches(userLoginDto.getPassword(), user.getPassword())) {
 			throw new CEmailSigninFailedException();
 		}
 		else {
@@ -93,31 +84,34 @@ public class UserController {
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
 	})
 	@ApiOperation(value = "회원삭제", notes="회원정보 삭제")
-	@DeleteMapping(value = "/delete")
-	public CommonResult delete(@RequestParam String password) {
+	@DeleteMapping(value = "/delete/{uid}")
+	public CommonResult delete(@PathVariable("uid") long uid) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		UserEntity user = userRepository.findByEmail(email);
-		if(!passwordEncoder.matches(password, user.getPassword())) {
-			throw new CEmailSigninFailedException();
+		if(user.getUid() != uid) {
+			throw new CUserNotCorrectException();
 		}
-		userRepository.deleteById(user.getUid());
+		userRepository.deleteById(uid);
 		return responseService.getSuccessResult();
 	}
+	
 	
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
 	})
 	@ApiOperation(value = "회원수정", notes = "회원정보를 수정")
-	@PutMapping(value = "/update")
-	public SingleResult<UserEntity> modify(
-			@ApiParam(value = "회원이메일", required = true) @RequestParam String email,
-			@ApiParam(value = "회원이름", required = true) @RequestParam String name,
-			@ApiParam(value = "회원닉네임", required = true) @RequestParam String nickname
-			){
+	@PutMapping(value = "/update/{uid}")
+	public SingleResult<UserEntity> modify(@RequestBody UserDto userDto, @PathVariable("uid") long uid){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
 		UserEntity user = userRepository.findByEmail(email);
-		user.setName(name);
-		user.setNickname(nickname);
+		if(user.getUid() != uid) {
+			throw new CUserNotCorrectException();
+		}
+		user.setPassword(userDto.getPassword() == null ? user.getPassword() : passwordEncoder.encode(userDto.getPassword()));
+		user.setName(userDto.getName() == null ? user.getName() : userDto.getName());
+		user.setNickname(userDto.getNickname() == null ? user.getNickname() : userDto.getNickname());
 		return responseService.getSingleResult(userRepository.save(user));
 	}
 	
@@ -125,11 +119,14 @@ public class UserController {
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
 	})
 	@ApiOperation(value = "회원조회", notes = "회원정보를 조회")
-	@GetMapping(value = "/select")
-	public SingleResult<UserEntity> select(
-			@ApiParam(value = "회원이메일", required = true) @RequestParam String email
-			){
+	@GetMapping(value = "/select/{uid}")
+	public SingleResult<UserEntity> select(@PathVariable("uid") long uid){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
 		UserEntity user = userRepository.findByEmail(email);
+		if(user.getUid() != uid) {
+			throw new CUserNotCorrectException();
+		}
 		return responseService.getSingleResult(user);
 	}
 	
