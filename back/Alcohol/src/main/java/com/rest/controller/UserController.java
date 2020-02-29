@@ -132,4 +132,30 @@ public class UserController {
 		UserEntity user = userRepository.findByEmail(email);
 		return responseService.getSingleResult(user);
 	}
+	
+	
+	@GetMapping("/checkemail")
+	@ApiOperation(value = "이메일 중복조회", notes = "true: 중복, false: 중복x")
+	public SingleResult<Boolean> checkemail(
+			@ApiParam(value = "회원이메일", required = true) @RequestParam String email 
+			){
+		UserEntity user = userRepository.findByEmail(email);
+		if(user != null) {
+			return responseService.getSingleResult(true);
+		}
+		return responseService.getSingleResult(false);
+	}
+	
+	@GetMapping("/checknickname")
+	@ApiOperation(value = "닉네임 중복조회",  notes = "true: 중복, false: 중복x")
+	public SingleResult<Boolean> checknickname(
+			@ApiParam(value = "회원 닉네임", required = true) @RequestParam String nickname 
+			){
+		UserEntity user = userRepository.findByNickname(nickname);
+		if(user != null) {
+			return responseService.getSingleResult(true);
+		}
+		return responseService.getSingleResult(false);
+	}
+	
 }

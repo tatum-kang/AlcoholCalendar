@@ -6,4 +6,5 @@ import com.rest.domain.entity.UserEntity;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	UserEntity findByEmail(String email);
+	UserEntity findByNickname(String nickname);
 }
