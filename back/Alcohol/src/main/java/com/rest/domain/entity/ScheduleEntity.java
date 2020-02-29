@@ -56,7 +56,8 @@ public class ScheduleEntity extends TimeEntity{
 	private String content;
 	
 	@JsonProperty(access = Access.WRITE_ONLY)
-	@ManyToOne(optional = false, cascade = CascadeType.ALL)
+	@JsonManagedReference
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_uid")
 	private UserEntity user;
 
@@ -69,6 +70,5 @@ public class ScheduleEntity extends TimeEntity{
 	
 	@Column(nullable = false)
 	private double soju;
-	
 	
 }

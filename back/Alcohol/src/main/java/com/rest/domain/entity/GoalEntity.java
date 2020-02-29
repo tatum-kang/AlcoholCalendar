@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -55,8 +56,9 @@ public class GoalEntity extends TimeEntity{
 	private String title;
 	
 	@Column(nullable = true)
-	private int day;
+	private int dday;
 	
+	@JsonManagedReference
 	@JsonProperty(access = Access.WRITE_ONLY)
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_uid")

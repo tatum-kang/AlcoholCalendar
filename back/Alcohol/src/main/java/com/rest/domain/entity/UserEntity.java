@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -23,6 +24,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -70,15 +72,15 @@ public class UserEntity extends TimeEntity implements UserDetails{
 	@Column(nullable = false)
 	private boolean emailAuthBool;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)	
+	@JsonBackReference
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//	@Fetch(FetchMode.SELECT)
 	@Builder.Default
 	private List<ScheduleEntity> schedules = new ArrayList<>();
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SELECT)
+	@JsonBackReference
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//	@Fetch(FetchMode.SELECT)
 	@Builder.Default
 	private List<GoalEntity> goal = new ArrayList<>();
 	

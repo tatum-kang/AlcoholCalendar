@@ -22,6 +22,7 @@ import com.rest.config.emailAuth.TempKey;
 import com.rest.config.jwtAuth.JwtTokenProvider;
 import com.rest.domain.dto.UserDto;
 import com.rest.domain.dto.UserLoginDto;
+import com.rest.domain.dto.UserUpdateDto;
 import com.rest.domain.entity.UserEntity;
 import com.rest.domain.repository.UserRepository;
 import com.rest.domain.response.CommonResult;
@@ -100,18 +101,18 @@ public class UserController {
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
 	})
-	@ApiOperation(value = "회원수정", notes = "회원정보를 수정")
+	@ApiOperation(value = "회원수정", notes = "변경하고자 하는 필드만 보내주세요")
 	@PutMapping(value = "/update/{uid}")
-	public SingleResult<UserEntity> modify(@RequestBody UserDto userDto, @PathVariable("uid") long uid){
+	public SingleResult<UserEntity> modify(@RequestBody UserUpdateDto userUpdateDto, @PathVariable("uid") long uid){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		UserEntity user = userRepository.findByEmail(email);
 		if(user.getUid() != uid) {
 			throw new CUserNotCorrectException();
 		}
-		user.setPassword(userDto.getPassword() == null ? user.getPassword() : passwordEncoder.encode(userDto.getPassword()));
-		user.setName(userDto.getName() == null ? user.getName() : userDto.getName());
-		user.setNickname(userDto.getNickname() == null ? user.getNickname() : userDto.getNickname());
+		user.setPassword(userUpdateDto.getPassword() == "default"? user.getPassword() : passwordEncoder.encode(userUpdateDto.getPassword()));
+		user.setName(userUpdateDto.getName() == "default" ? user.getName() : userUpdateDto.getName());
+		user.setNickname(userUpdateDto.getNickname() == "default" ? user.getNickname() : userUpdateDto.getNickname());
 		return responseService.getSingleResult(userRepository.save(user));
 	}
 	
