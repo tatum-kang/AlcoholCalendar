@@ -6,9 +6,12 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.2",
     "cross-env": "^7.0.0",
     "immutable": "^4.0.0-rc.12",
+    "lodash": "^4.17.15",
     "open-color": "^1.7.0",
+    "query-string": "^6.11.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.2.0",
@@ -16,7 +19,9 @@
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
-    "styled-components": "^5.0.1"
+    "redux-pender": "^2.0.12",
+    "styled-components": "^5.0.1",
+    "validator": "^12.2.0"
   },
   "scripts": {
     "start": "cross-env NODE_PATH=src react-scripts start",
