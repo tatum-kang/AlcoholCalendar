@@ -48,7 +48,7 @@ public class GoalController {
 
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
-	@ApiOperation(value = "목표생성", notes = "목표를 생성")
+	@ApiOperation(value = "목표생성", notes = "날짜양식 yy-MM-dd")
 	@PostMapping(value = "/save")
 	public SingleResult<GoalEntity> save(@RequestBody GoalDto goalDto) {
 		UserEntity user = authToUserService.getUser();
@@ -78,7 +78,7 @@ public class GoalController {
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
 	})
-	@ApiOperation(value = "목표수정", notes="날짜 형식: \"yyyy-MM-dd\", 업데이트하고자 하는 필드만 포함")
+	@ApiOperation(value = "목표수정", notes="날짜 형식: yyyy-MM-dd, 업데이트하고자 하는 필드만 포함")
 	@PutMapping(value = "/update/{gid}")
 	public SingleResult<GoalEntity> update( @PathVariable("gid") long gid, @RequestBody GoalUpdateDto goalUpdateDto){
 		UserEntity user = authToUserService.getUser();

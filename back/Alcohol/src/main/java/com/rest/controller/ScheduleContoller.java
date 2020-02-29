@@ -48,7 +48,7 @@ public class ScheduleContoller {
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
 	})
-	@ApiOperation(value = "일정 등록", notes = "일정 등록하기 날짜양식 \"yyyy-MM-dd HH:mm:ss\"")
+	@ApiOperation(value = "일정 등록", notes = "날짜양식 :yyyy-MM-dd HH:mm:ss")
 	@PostMapping("/save")
 	public SingleResult<ScheduleEntity> save(@RequestBody ScheduleDto scheduleDto){
 		UserEntity user = authToUserService.getUser();
@@ -78,7 +78,7 @@ public class ScheduleContoller {
 	@ApiImplicitParams({
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
 	})
-	@ApiOperation(value = "일정 수정", notes = "일정 수정 하기")
+	@ApiOperation(value = "일정 수정", notes = "날짜양식 :yyyy-MM-dd HH:mm:ss")
 	@PutMapping("/update/{sid}")
 	public SingleResult<ScheduleEntity> update(@PathVariable("sid") long sid,
 			@RequestBody ScheduleUpdateDto scheduleUpdateDto){
