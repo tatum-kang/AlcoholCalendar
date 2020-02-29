@@ -120,14 +120,11 @@ public class UserController {
         @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
 	})
 	@ApiOperation(value = "회원조회", notes = "회원정보를 조회")
-	@GetMapping(value = "/select/{uid}")
-	public SingleResult<UserEntity> select(@PathVariable("uid") long uid){
+	@GetMapping(value = "/select")
+	public SingleResult<UserEntity> select(){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		UserEntity user = userRepository.findByEmail(email);
-		if(user.getUid() != uid) {
-			throw new CUserNotCorrectException();
-		}
 		return responseService.getSingleResult(user);
 	}
 	
