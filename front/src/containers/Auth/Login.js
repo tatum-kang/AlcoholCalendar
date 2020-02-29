@@ -6,14 +6,14 @@ import * as authActions from 'redux/modules/auth';
 import * as userActions from 'redux/modules/user';
 import storage from 'lib/storage';
 import queryString from 'query-string';
-
+import jwt from "jsonwebtoken";
 class Login extends Component {
     componentDidMount() {
         const { location } = this.props;
         const query = queryString.parse(location.search);
-
+        
         if(query.expired !== undefined) {
-            this.setError('세션에 만료되었습니다. 다시 로그인하세요.')
+            this.setError('세션이 만료되었습니다. 다시 로그인하세요.')
         }
     }
     handleChange = (e) => {
@@ -48,12 +48,12 @@ class Login extends Component {
 
         try {
             await AuthActions.localLogin({email, password});
-            const loggedInfo = this.props.result.toJS();
-
+            const token = this.props.result.toJS().data;
+            const loggedInfo = jwt.decode(token);
             UserActions.setLoggedInfo(loggedInfo);
             history.push('/');
-            storage.set('loggedInfo', loggedInfo);
-
+            storage.set("token", token);
+            
         } catch (e) {
             console.log('a');
             this.setError('잘못된 계정정보입니다.');

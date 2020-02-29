@@ -19,7 +19,7 @@ export const checkEmailExists = createAction(CHECK_EMAIL_EXISTS, AuthAPI.checkEm
 export const checkNicknameExists = createAction(CHECK_NICKNAME_EXISTS, AuthAPI.checkNicknameExists); // username
 export const localRegister = createAction(LOCAL_REGISTER, AuthAPI.localRegister); // { email, username, password }
 export const localLogin = createAction(LOCAL_LOGIN, AuthAPI.localLogin); // { email, password }
-export const logout = createAction(LOGOUT, AuthAPI.logout);
+export const logout = createAction(LOGOUT);
 
 const initialState = Map({
     register: Map({
@@ -61,18 +61,22 @@ export default handleActions({
     },
     ...pender({
         type: CHECK_EMAIL_EXISTS,
-        onSuccess: (state, action) => state.setIn(['register', 'exists', 'email'], action.payload.data.exists)
+        onSuccess: (state, action) => state.setIn(['register', 'exists', 'email'], action.payload.data.data)
     }),
     ...pender({
         type: CHECK_NICKNAME_EXISTS,
-        onSuccess: (state, action) => state.setIn(['register', 'exists', 'nickname'], action.payload.data.exists)
+        onSuccess: (state, action) => state.setIn(['register', 'exists', 'nickname'], action.payload.data.data)
     }),
     ...pender({
         type: LOCAL_LOGIN,
-        onSuccess: (state, action) => state.set('result', Map(action.payload.data))
+        onSuccess: (state, action) => {
+            return state.set('result', Map(action.payload.data))
+        }
     }),
     ...pender({
         type: LOCAL_REGISTER,
-        onSuccess: (state, action) => state.set('result', Map(action.payload.data))
+        onSuccess: (state, action) => {
+            console.log("회원가입", action.payload)
+            return state.set('result', Map(action.payload.data))}
     }),
 }, initialState);

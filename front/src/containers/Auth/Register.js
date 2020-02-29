@@ -3,10 +3,11 @@ import { AuthContent, InputWithLabel, AuthButton, RightAlignedLink , AuthError }
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as authActions from 'redux/modules/auth';
-import {isEmail, isLength, isAlphanumeric} from 'validator';
+import {isEmail, isLength } from 'validator';
 import debounce from 'lodash/debounce';
 import * as userActions from 'redux/modules/user';
-import storage from 'lib/storage';
+// import storage from 'lib/storage';
+// import jwt from "jsonwebtoken";
 class Register extends Component {
     componentWillUnmount() {
         const { AuthActions } = this.props;
@@ -33,10 +34,6 @@ class Register extends Component {
             return true;
         },
         nickname: (value) => {
-            if(!isAlphanumeric(value) || !isLength(value, { min:4, max: 15 })) {
-                this.setError('닉네임은 4~15 글자의 알파벳 혹은 숫자로 이뤄져야 합니다.');
-                return false;
-            }
             this.setError(null)
             return true;
         },
@@ -99,7 +96,7 @@ class Register extends Component {
         check(value);
     }
     handleLocalRegister = async () => {
-        const { form, AuthActions, UserActions, error, history } = this.props;
+        const { form, AuthActions, error, history } = this.props;
         const { email, name, nickname, password, passwordConfirm } = form.toJS();
 
         const { validate } = this;
@@ -118,13 +115,11 @@ class Register extends Component {
             await AuthActions.localRegister({
                 email, name, nickname, password
             });
-            const loggedInfo = this.props.result.toJS();
-            console.log(loggedInfo);
             // TODO: 로그인 정보 저장 (로컬스토리지/스토어)
-            storage.set('loggedInfo', loggedInfo);
-            UserActions.setLoggedInfo(loggedInfo);
-            UserActions.setValidated(true);
-            history.push('/'); // 회원가입 성공시 홈페이지로 이동
+            // const token = this.props.result.toJS().data;
+            // const loggedInfo = jwt.decode(token);
+            // UserActions.setLoggedInfo(loggedInfo);
+            history.push('/auth/Emailsend'); // email확인해보라는 
         } catch(e) {
             // 에러 처리하기
             if(e.response.status === 409) {
