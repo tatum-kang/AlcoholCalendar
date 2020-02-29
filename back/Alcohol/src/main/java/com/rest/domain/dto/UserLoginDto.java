@@ -3,8 +3,6 @@ package com.rest.domain.dto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-import com.rest.domain.dto.UserSignupDto.UserSignupDtoBuilder;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
