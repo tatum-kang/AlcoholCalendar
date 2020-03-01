@@ -51,9 +51,9 @@ class Login extends Component {
             const token = this.props.result.toJS().data;
             const loggedInfo = jwt.decode(token);
             UserActions.setLoggedInfo(loggedInfo);
-            history.push('/');
+            history.push('/home');
             storage.set("token", token);
-            
+
         } catch (e) {
             console.log('a');
             this.setError('잘못된 계정정보입니다.');
