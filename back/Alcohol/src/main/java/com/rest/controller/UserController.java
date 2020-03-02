@@ -73,7 +73,7 @@ public class UserController {
 		}
 		else {
 			if(user.isEmailAuthBool()) {
-				return responseService.getSingleResult(jwtTokenProvider.createToken(user.getEmail(), user.getRoles()));
+				return responseService.getSingleResult(jwtTokenProvider.createToken(user, user.getRoles()));
 			}
 			else {
 				throw new CEmailConfirmFailedException();

@@ -39,9 +39,11 @@ public class JwtTokenProvider {
 		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
 	}
 
-	public String createToken(String uid, List<String> roles) {
-		Claims claims = Jwts.claims().setSubject(uid);
+	public String createToken(UserEntity user, List<String> roles) {
+		Claims claims = Jwts.claims().setSubject(user.getEmail());
 		claims.put("roles", roles);
+		claims.put("name", user.getName());
+		claims.put("nickname", user.getNickname());
 		Date now = new Date();
 		return Jwts.builder().setClaims(claims) // 데이터
 				.setIssuedAt(now) // 토큰 발행일자
