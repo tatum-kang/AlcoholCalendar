@@ -15,7 +15,9 @@ export const checkStatus = createAction(CHECK_STATUS);
 
 const initialState = Map({
     loggedInfo: Map({ // 현재 로그인중인 유저의 정보
-        email: null
+        email: null,
+        name: null,
+        nickname: null
     }),
     logged: false, // 현재 로그인중인지 알려준다
     validated: false // 이 값은 현재 로그인중인지 아닌지 한번 서버측에 검증했음을 의미
@@ -23,9 +25,9 @@ const initialState = Map({
 
 export default handleActions({
     [SET_LOGGED_INFO]: (state, action) => {
-        const { sub } = action.payload
+        const { sub, name, nickname } = action.payload
         console.log("email입니다", action.payload)
-        return state.setIn(['loggedInfo'], Map({email: sub})).set('logged', true)
+        return state.setIn(['loggedInfo'], Map({email: sub, name: name, nickname: nickname})).set('logged', true)
     },
     [SET_VALIDATED]: (state, action) => state.set('validated', action.payload),
     ...pender({

@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { changeDate } from 'redux/modules/calendar';
 import { bindActionCreators } from 'redux';
-import { Calendar } from 'components/Home';
+import { Calendar } from 'components/Home/Calendar';
 
 
 class CalendarContainer extends React.PureComponent{

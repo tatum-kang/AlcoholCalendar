@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import oc from 'open-color';
-import { Link } from 'react-router-dom';
 import { shadow } from 'lib/styleUtils';
 
-const BorderedButton = styled(Link)`
+const BorderedButton = styled.div`
     font-weight: 600;
     color: ${oc.cyan[6]};
     border: 1px solid ${oc.cyan[6]};
@@ -29,10 +28,9 @@ const BorderedButton = styled(Link)`
 
 `;
 
-const LogoutButton = () => (
-    <BorderedButton to="/">
+const LogoutButton = ({onClick}) => (
+    <BorderedButton onClick={onClick}>
         로그아웃
     </BorderedButton>
 );
-
 export default LogoutButton;

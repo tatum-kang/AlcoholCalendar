@@ -6,7 +6,7 @@ export default class Home extends Component {
     render() {
         return (
             <AuthWrapper>
-                <Route path="/" component={CalendarContainer}/>
+                <Route path="/home" component={CalendarContainer}/>
             </AuthWrapper>
         )
     }

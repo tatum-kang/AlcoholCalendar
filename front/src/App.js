@@ -14,10 +14,12 @@ class App extends Component {
     initializeUserInfo = async () => {
         const token = storage.get('token'); // 로그인 정보를 로컬스토리지에서 가져옵니다.
         if(!token) return; // 로그인 정보가 없다면 여기서 멈춥니다.
-
-        const { UserActions } = this.props;
+        
+        const { UserActions, history } = this.props;
         const loggedInfo = jwt.decode(token)
+        console.log(loggedInfo)
         UserActions.setLoggedInfo(loggedInfo);
+        history.push('/home')
         // try {
         //     await UserActions.checkStatus();
         // } catch (e) {
@@ -34,7 +36,7 @@ class App extends Component {
         return (
             <div>
                 <HeaderContainer/>
-                <Route exact path="/" component={Home}/>
+                <Route exact path="/home" component={Home}/>
                 <Route path="/auth" component={Auth}/>
             </div>
         );

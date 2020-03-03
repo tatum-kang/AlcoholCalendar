@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import Header, { LoginButton, LogoutButton } from 'components/Base/Header';
 import { connect } from 'react-redux';
 import * as userActions from 'redux/modules/user';
@@ -10,12 +10,12 @@ import storage from 'lib/storage';
 class HeaderContainer extends Component {
 
     handleLogout = async () => {
-        const { UserActions } = this.props;
-        try {
-            await UserActions.logout();
-        } catch (e) {
-            console.log(e);
-        }
+        // const { UserActions } = this.props;
+        // try {
+        //     await UserActions.logout();
+        // } catch (e) {
+        //     console.log(e);
+        // }
 
         storage.remove('token');
         window.location.href = '/'; // 홈페이지로 새로고침
@@ -31,9 +31,10 @@ class HeaderContainer extends Component {
         return (
             <Header>
                 { user.get('logged') 
-                    ? (<div>
-                        {user.getIn(['loggedInfo', 'email'])}님 어서오세요. <LogoutButton/> 
-                    </div> )
+                    ? (
+                        <Fragment>
+                    <div>{user.getIn(['loggedInfo', 'name'])}님 어서오세요.</div> <LogoutButton onClick={this.handleLogout}/>
+                    </Fragment>)
                     : <LoginButton/> 
                 }
             </Header>
