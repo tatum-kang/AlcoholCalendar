@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Email Template</title>
+</head>
+<body>
+	<h2>[이메일 인증]</h2>
+	<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>
+	<br>
+	<a th:href="@{http://ec2-15-165-98-23.ap-northeast-2.compute.amazonaws.com:8080/v1/user/signup/confirm(authkey=${user.emailAuthKey}, uid=${user.uid})}">이메일 인증하기</a>
+	
+</body>
+</html>

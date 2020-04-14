@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://database-1.cwp8i0hixxrs.ap-northeast-2.rds.amazonaws.com:3306/webserverdb?serverTimezone=Asia/Seoul
+    username: admin
+    password: 1stlight!
+    
+    
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      
+  messages:
+    basename: i18n/exception
+    encoding: UTF-8
+  jwt:
+    secret: govlepel@$&
+    
+mail:
+  smtp:
+    username: heewkk@gmail.com
+    password: lnazlkmkdoilmfdd
+    auth: true
+    port: 465
+    socketFactory:
+      class: javax.net.ssl.SSLSocketFactory
+      fallback: false
+      port: 465
+    starttls:
+      enable: true
+      required: true
+
+    
+
