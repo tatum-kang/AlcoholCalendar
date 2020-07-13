@@ -22,7 +22,7 @@ spring:
 mail:
   smtp:
     username: heewkk@gmail.com
-    password: lnazlkmkdoilmfdd
+    password: sdsds
     auth: true
     port: 465
     socketFactory:
